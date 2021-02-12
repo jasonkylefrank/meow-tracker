@@ -6,15 +6,15 @@ import Nav from '../components/nav'
 const Home = () => (
   <div>
     <Head title="Home" />
-    <Nav />
+    {/* <Nav /> */}
 
     <div className="hero">
-      <h1 className="title">Welcome to Next!</h1>
+      <h1 className="title">Meow Tracker</h1>
       <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
+        The meows are an extension of her heart!
       </p>
 
-      <div className="row">
+      {/* <div className="row">
         <Link href="https://github.com/zeit/next.js#getting-started">
           <a className="card">
             <h3>Getting Started &rarr;</h3>
@@ -30,13 +30,7 @@ const Home = () => (
             </p>
           </a>
         </Link>
-        <Link href="https://github.com/segmentio/create-next-app">
-          <a className="card">
-            <h3>Create Next App &rarr;</h3>
-            <p>Was this tool helpful? Let us know how we can improve it</p>
-          </a>
-        </Link>
-      </div>
+      </div> */}
     </div>
 
     <style jsx>{`

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Head from '../components/head'
 import Nav from '../components/nav'
 
-const Home = () => (
+const Home = ({ meowUpdates }) => (
   <div>
     <Head title="Home" />
     {/* <Nav /> */}
@@ -11,29 +11,40 @@ const Home = () => (
     <div className="hero">
       <h1 className="title">Meow Tracker</h1>
       <p className="description">
-        The meows are an extension of her heart!
+        The meows are as big as her heart!
       </p>
+    </div>
 
-      {/* <div className="row">
-        <Link href="https://github.com/zeit/next.js#getting-started">
-          <a className="card">
-            <h3>Getting Started &rarr;</h3>
-            <p>Learn more about Next on Github and in their examples</p>
-          </a>
-        </Link>
-        <Link href="https://open.segment.com/create-next-app">
-          <a className="card">
-            <h3>Examples &rarr;</h3>
-            <p>
-              Find other example boilerplates on the{' '}
-              <code>create-next-app</code> site
-            </p>
-          </a>
-        </Link>
-      </div> */}
+    <div className="separator" />
+
+    <div className="meowsCountWrapper">
+      <label className="meowsCountLabel">Total meows: </label>
+      <label className="meowsCount">{meowUpdates.length}</label>
+    </div>
+
+    <div className="updatesWrapper">
+      <ul className="updates">
+        {
+          meowUpdates.map(update => (
+            <li className="updateItem" key={update.timestamp}>
+              <div className="message">{update.message}</div>
+              <div className="timestamp">{update.timestamp}</div>
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     <style jsx>{`
+      :global(body) {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
+          Helvetica, sans-serif;
+      }
+      :global(li) {
+        list-style: none;
+      }
+
       .hero {
         width: 100%;
         color: #333;
@@ -49,13 +60,56 @@ const Home = () => (
       .description {
         text-align: center;
       }
-      .row {
+      .description {
+        font-size: 12px;
+        color: rgba(0,0,0,0.54);
+      }
+      .separator {
+        border-top: 1px solid rgba(0,0,0,0.1);
+        width: 212px;
+        margin: 0 auto;
+        margin: 56px auto;
+      }
+      .meowsCountWrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 0;
+        font-size: 14px;
+        color: rgba(0,0,0,0.7);
+      }
+      .meowsCountLabel {
+        color: rgba(0,0,0,0.4);
+      }
+      .meowsCount {
+        margin-left: 8px;
+        font-weight: bold;
+      }
+      .updatesWrapper {
+        display: flex;
+        justify-content: center;
+      }
+      .updates {
+        margin: 24px;
+        margin-top: 48px;
+        padding: 0;
+      }
+      .updateItem {
+        margin-bottom: 32px;
+      }
+      .message {
+        margin-bottom: 4px;
+      }
+      .timestamp {
+        font-size: 12px;
+        color: rgba(0,0,0,0.45);
+      }
+      {/* .row {
         max-width: 880px;
         margin: 80px auto 40px;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-      }
+      } 
       .card {
         padding: 18px 18px 24px;
         width: 220px;
@@ -78,8 +132,17 @@ const Home = () => (
         font-size: 13px;
         color: #333;
       }
+      */}
     `}</style>
   </div>
 )
+
+export async function getServerSideProps() {
+
+  const res = await fetch("https://hobbseymeowtracker.azurewebsites.net/api/GetMeows?code=xJF/cteag7viajXk1xrk5hokq7pqa7y2o8ZYFetq2WkIhgX1WA5pEw==");
+  const meowUpdates = await res.json();
+
+  return { props: { meowUpdates } };
+}
 
 export default Home

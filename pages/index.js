@@ -137,12 +137,18 @@ const Home = ({ meowUpdates }) => (
   </div>
 )
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
   const res = await fetch("https://hobbseymeowtracker.azurewebsites.net/api/GetMeows?code=xJF/cteag7viajXk1xrk5hokq7pqa7y2o8ZYFetq2WkIhgX1WA5pEw==");
   const meowUpdates = await res.json();
 
-  return { props: { meowUpdates } };
+  return { 
+    props: { meowUpdates }, 
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every second
+    revalidate: 1, // In seconds
+  };
 }
 
 export default Home
